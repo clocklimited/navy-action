@@ -1,10 +1,16 @@
+// bundlers can't detect that this is used in primus
+// as it is a non-static require
+const ws = require('ws')
+const jsonParser = require('primus/parsers/json')
+const wsTransformer = require('primus/transformers/websockets')
 const core = require('@actions/core');
 const Primus = require('primus')
 const Emitter = require('primus-emitter')
 const Socket = Primus.createSocket({
-  transformer: 'websockets',
-  parser: 'JSON',
-  plugin: { emitter: Emitter }
+  transformer: wsTransformer,
+  parser: jsonParser,
+  plugin: { emitter: Emitter },
+  noop: [ws]
 })
 
 const admiralHost = core.getInput('admiralHost')

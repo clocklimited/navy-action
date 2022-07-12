@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
-    "prepare": "ncc build index.js -o dist --source-map --license licenses.txt",
+    "prepare": "esbuild index.js --bundle --platform=node --outdir=dist --sourcemap && mkdir -p ./dist/dist && cp ./node_modules/primus/dist/primus.js ./dist/dist/",
     "test": "jest --passWithNoTests",
     "all": "yarn run lint && yarn run prepare && yarn run test"
   },
@@ -28,13 +28,13 @@
   "homepage": "https://github.com/clocklimited/navy-action#readme",
   "dependencies": {
     "@actions/core": "^1.2.5",
-    "primus": "^5.2.2",
+    "primus": "^8.0.6",
     "primus-emitter": "^3.1.1",
     "primus-rooms": "^3.4.1",
-    "ws": "^1.1.0"
+    "ws": "^8.8.0"
   },
   "devDependencies": {
-    "@vercel/ncc": "^0.31.1",
+    "esbuild": "^0.14.49",
     "eslint": "^8.0.0",
     "jest": "^27.2.5"
   }
