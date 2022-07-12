@@ -12,14 +12,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - run: npm ci
-    - run: npm test
+    - run: yarn install
+    - run: yarn test
 
+  # Disabled because there is no public admiral host to test with
   # test action works running from the graph
-  test:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - uses: ./
-      with:
-        milliseconds: 1000
+  # test:
+    # runs-on: ubuntu-latest
+    # steps:
+    # - uses: actions/checkout@v3
+    # - uses: ./
+      # with:
+        # milliseconds: 1000
