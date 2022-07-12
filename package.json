@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
-    "prepare": "esbuild index.js --bundle --platform=node --outdir=dist --sourcemap --external:primus* --external:ws",
+    "prepare": "ncc build index.js -o dist --source-map --license licenses.txt",
     "test": "jest --passWithNoTests",
     "all": "yarn run lint && yarn run prepare && yarn run test"
   },
@@ -34,7 +34,7 @@
     "ws": "^8.8.0"
   },
   "devDependencies": {
-    "esbuild": "^0.14.49",
+    "@vercel/ncc": "^0.34.0",
     "eslint": "^8.0.0",
     "jest": "^28.1.2"
   }
