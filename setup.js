@@ -1,3 +1,3 @@
 const { execSync } = require('child_process')
 
-execSync('npm ci')
+execSync('npm install --production')
