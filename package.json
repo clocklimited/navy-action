@@ -1,7 +1,7 @@
 {
-  "name": "javascript-action",
-  "version": "1.0.0",
-  "description": "JavaScript Action Template",
+  "name": "navy-action",
+  "version": "0.0.0",
+  "description": "Communicate with a Navy Admiral and issue commands",
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
@@ -11,19 +11,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/javascript-action.git"
+    "url": "git+https://github.com/clocklimited/navy-action.git"
   },
   "keywords": [
     "GitHub",
     "Actions",
-    "JavaScript"
+    "JavaScript",
+    "navy",
+    "Clock"
   ],
-  "author": "",
+  "author": "Clock Limited",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/actions/javascript-action/issues"
+    "url": "https://github.com/clocklimited/navy-action/issues"
   },
-  "homepage": "https://github.com/actions/javascript-action#readme",
+  "homepage": "https://github.com/clocklimited/navy-action#readme",
   "dependencies": {
     "@actions/core": "^1.2.5"
   },
