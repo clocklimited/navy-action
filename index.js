@@ -1,21 +1,68 @@
 const core = require('@actions/core');
-const wait = require('./wait');
+const Primus = require('primus')
+const Emitter = require('primus-emitter')
+const Socket = Primus.createSocket({
+  transformer: 'websockets',
+  parser: 'JSON',
+  plugin: { emitter: Emitter }
+})
 
+const admiralHost = core.getInput('admiralHost')
+const appId = core.getInput('appId')
+const order = core.getInput('order')
+const version = core.getInput('version')
+const explicitEnvironment = core.getInput('environment')
 
-// most @actions toolkit packages have async methods
-async function run() {
-  try {
-    const ms = core.getInput('milliseconds');
-    core.info(`Waiting ${ms} milliseconds ...`);
+core.info('INPUT:', appId, order, version, explicitEnvironment)
 
-    core.debug((new Date()).toTimeString()); // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
-    await wait(parseInt(ms));
-    core.info((new Date()).toTimeString());
-
-    core.setOutput('time', new Date().toTimeString());
-  } catch (error) {
-    core.setFailed(error.message);
-  }
+if (!admiralHost || !appId || !order || !version) {
+  core.setFailed('admiralHost, appId, order and version must all be set')
+  process.exit(1)
 }
 
-run();
+const environment =
+  explicitEnvironment || (version.includes('-') ? 'staging' : 'production')
+
+core.info('Chosen Environment:', environment)
+
+const client = new Socket(admiralHost, { strategy: false })
+
+client.on('error', (error) => {
+  core.info(error)
+  client.end()
+})
+
+client.on('open', () => {
+  client.on('serverMessage', (data) => {
+    const msg = 'Admiral: ' + data.message
+    core.info(msg)
+  })
+
+  client.on('captainMessage', (data) => {
+    const msg = data.captainName + ': ' + data.message
+    core.info(msg)
+  })
+
+  client.send('register', null, (response) => {
+    const data = {
+      appId: appId,
+      environment: environment,
+      order: order,
+      orderArgs: [version],
+      clientId: response.clientId,
+      username: 'GitHub Actions'
+    }
+    client.send('executeOrder', data, (response) => {
+      if (response.success) {
+        core.info('ORDER EXECUTED')
+        core.setOutput('success', true)
+      } else {
+        if (response.message) core.info(response.message)
+        core.setOutput('success', false)
+        core.setFailed(response.message)
+        process.exit(1)
+      }
+      client.end()
+    })
+  })
+})

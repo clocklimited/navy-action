@@ -1,13 +1,26 @@
-name: 'Wait'
-description: 'Wait a designated number of milliseconds'
+name: 'Navy'
+author: 'Clock Limited'
+description: 'Communicate with a Navy Admiral and issue commands'
 inputs:
-  milliseconds:  # id of input
-    description: 'number of milliseconds to wait'
+  admiralHost:
+    description: 'The address of the Navy Admiral host'
     required: true
-    default: '1000'
+  appId:
+    description: 'The app ID you want to target'
+    required: true
+  order:
+    description: 'The order the Admiral should execute'
+    required: true
+  version:
+    description: 'The version you wish to provide'
+    required: true
+  environment:
+    description: 'The environment you want to target, staging/production'
+    required: true
+
 outputs:
-  time: # output will be available to future steps
-    description: 'The current time after waiting'
+  success:
+    description: 'If the order completed successfully or not'
 runs:
   using: 'node16'
-  main: 'dist/index.js'
+  main: './index.js'
