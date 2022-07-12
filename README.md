@@ -1,68 +1,28 @@
-# Create a JavaScript Action
+# Navy Action
 
-<p align="center">
-  <a href="https://github.com/actions/javascript-action/actions"><img alt="javscript-action status" src="https://github.com/actions/javascript-action/workflows/units-test/badge.svg"></a>
-</p>
+This action was created from the [actions/javascript-action](https://github.com/actions/javascript-action) template.
 
-Use this template to bootstrap the creation of a JavaScript action.:rocket:
+## Usage
 
-This template includes tests, linting, a validation workflow, publishing, and versioning guidance.
+```yaml
+      - name: Navy Prepare
+        uses: clocklimited/navy-action
+        with:
+          admiralHost: ${{ secrets.ADMIRAL_HOST }}
+          appId: 'your-app-id'
+          order: 'prepare'
+          version: ${{ github.sha }}
+          environment: 'staging'
 
-If you are new, there's also a simpler introduction.  See the [Hello World JavaScript Action](https://github.com/actions/hello-world-javascript-action)
-
-## Create an action from this template
-
-Click the `Use this Template` and provide the new repo details for your action
-
-## Code in Main
-
-Install the dependencies
-
-```bash
-npm install
+      - name: Navy Install
+        uses: clocklimited/navy-action
+        with:
+          admiralHost: ${{ secrets.ADMIRAL_HOST }}
+          appId: 'your-app-id'
+          order: 'install'
+          version: ${{ github.sha }}
+          environment: 'staging'
 ```
-
-Run the tests :heavy_check_mark:
-
-```bash
-$ npm test
-
- PASS  ./index.test.js
-  ✓ throws invalid number (3ms)
-  ✓ wait 500 ms (504ms)
-  ✓ test runs (95ms)
-...
-```
-
-## Change action.yml
-
-The action.yml defines the inputs and output for your action.
-
-Update the action.yml with your name, description, inputs and outputs for your action.
-
-See the [documentation](https://help.github.com/en/articles/metadata-syntax-for-github-actions)
-
-## Change the Code
-
-Most toolkit and CI/CD operations involve async operations so the action is run in an async function.
-
-```javascript
-const core = require('@actions/core');
-...
-
-async function run() {
-  try {
-      ...
-  }
-  catch (error) {
-    core.setFailed(error.message);
-  }
-}
-
-run()
-```
-
-See the [toolkit documentation](https://github.com/actions/toolkit/blob/master/README.md#packages) for the various packages.
 
 ## Package for distribution
 
@@ -103,14 +63,10 @@ Your action is now published! :rocket:
 
 See the [versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
 
-## Usage
+## Author
 
-You can now consume the action by referencing the v1 branch
+[Clock Limited](https://www.clock.co.uk)
 
-```yaml
-uses: actions/javascript-action@v1
-with:
-  milliseconds: 1000
-```
+## License
 
-See the [actions tab](https://github.com/actions/javascript-action/actions) for runs of this action! :rocket:
+MIT
