@@ -1,3 +1,4 @@
 const { execSync } = require('child_process')
 
-execSync('npm install --omit=dev', { cwd: __filename })
+console.log({__filename, __dirname})
+execSync('npm install --omit=dev', { cwd: process.cwd() })
