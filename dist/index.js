@@ -11986,7 +11986,7 @@ var Socket = Primus2.createSocket({
   transformer: wsTransformer,
   parser: jsonParser,
   plugin: { emitter: Emitter },
-  noop: [ws, jsonParser]
+  noop: [ws]
 });
 var admiralHost = core.getInput("admiralHost");
 var appId = core.getInput("appId");
