@@ -23,4 +23,5 @@ outputs:
     description: 'If the order completed successfully or not'
 runs:
   using: 'node16'
+  pre: './setup.js'
   main: './dist/index.js'
