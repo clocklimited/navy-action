@@ -1657,9 +1657,6 @@ var Socket = Primus.createSocket({
   plugin: { emitter: Emitter },
   noop: [ws]
 });
-console.log(ws);
-global.WebSocket = ws;
-globalThis.WebSocket = ws;
 var admiralHost = core.getInput("admiralHost");
 var appId = core.getInput("appId");
 var order = core.getInput("order");
@@ -1668,10 +1665,11 @@ var explicitEnvironment = core.getInput("environment");
 core.info("INPUT:", appId, order, version, explicitEnvironment);
 if (!admiralHost || !appId || !order || !version) {
   core.setFailed("admiralHost, appId, order and version must all be set");
+  process.exit(1);
 }
 var environment = explicitEnvironment || (version.includes("-") ? "staging" : "production");
 core.info("Chosen Environment:", environment);
-var client = new Socket(admiralHost, { strategy: false, websockets: ws });
+var client = new Socket(admiralHost, { strategy: false });
 client.on("error", (error) => {
   core.info(error);
   client.end();
