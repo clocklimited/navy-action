@@ -48,6 +48,11 @@ client.on('error', (error) => {
   process.exit(1)
 })
 
+client.on('end', () => {
+  core.info('Client disconnected')
+  process.exit(1)
+})
+
 client.on('open', () => {
   client.on('serverMessage', (data) => {
     const msg = 'Admiral: ' + data.message
@@ -76,7 +81,6 @@ client.on('open', () => {
         if (response.message) core.info(response.message)
         core.setOutput('success', false)
         core.setFailed(response.message)
-        process.exit(1)
       }
       client.end()
     })
