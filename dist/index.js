@@ -18208,23 +18208,31 @@ const order = core.getInput('order')
 const version = core.getInput('version')
 const explicitEnvironment = core.getInput('environment')
 
-core.info('INPUT:', appId, order, version, explicitEnvironment)
+core.info('INPUT: ' + JSON.stringify({appId, order, version, explicitEnvironment}))
 
 if (!admiralHost || !appId || !order || !version) {
   core.setFailed('admiralHost, appId, order and version must all be set')
+  core.setOutput('success', 'false')
   process.exit(1)
 }
 
 const environment =
   explicitEnvironment || (version.includes('-') ? 'staging' : 'production')
 
-core.info('Chosen Environment:', environment)
+core.info('Chosen Environment: ' + environment)
 
 const client = new Socket(admiralHost, { strategy: false })
 
+// We need to let Node know that we're doing something long lived
+// You will need to set a timeout on the action or this risks using
+// all your minutes!
+setInterval(() => {}, 5000)
+
 client.on('error', (error) => {
-  core.info(error)
+  core.setFailed('Client error: '+ error)
+  core.setOutput('success', 'false')
   client.end()
+  process.exit(1)
 })
 
 client.on('open', () => {
