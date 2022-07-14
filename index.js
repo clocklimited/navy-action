@@ -37,7 +37,9 @@ const client = new Socket(admiralHost, { strategy: false })
 // We need to let Node know that we're doing something long lived
 // You will need to set a timeout on the action or this risks using
 // all your minutes!
-setInterval(() => {}, 5000)
+setInterval(() => {
+  client.send('ping')
+}, 5000)
 
 client.on('error', (error) => {
   core.setFailed('Client error: '+ error)
