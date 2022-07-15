@@ -50,7 +50,7 @@ client.on('error', (error) => {
 
 client.on('end', () => {
   core.info('Client disconnected')
-  process.exit(1)
+  process.exit(0)
 })
 
 client.on('open', () => {
