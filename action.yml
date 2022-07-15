@@ -22,11 +22,6 @@ outputs:
   success:
     description: 'If the order completed successfully or not'
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  env:
-    ADMIRAL_HOST: ${{ inputs.admiralHost }}
-    APP_ID: ${{ inputs.appId }}
-    ORDER: ${{ inputs.order }}
-    VERSION: ${{ inputs.version }}
-    ENVIRONMENT: ${{ inputs.environment }}
+  using: 'node16'
+  pre: './setup.js'
+  main: './dist/index.js'
