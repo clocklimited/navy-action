@@ -18226,12 +18226,19 @@ const client = new Socket(admiralHost, { strategy: false })
 // We need to let Node know that we're doing something long lived
 // You will need to set a timeout on the action or this risks using
 // all your minutes!
-setInterval(() => {}, 5000)
+setInterval(() => {
+  client.send('ping')
+}, 5000)
 
 client.on('error', (error) => {
   core.setFailed('Client error: '+ error)
   core.setOutput('success', 'false')
   client.end()
+  process.exit(1)
+})
+
+client.on('end', () => {
+  core.info('Client disconnected')
   process.exit(1)
 })
 
@@ -18263,7 +18270,6 @@ client.on('open', () => {
         if (response.message) core.info(response.message)
         core.setOutput('success', false)
         core.setFailed(response.message)
-        process.exit(1)
       }
       client.end()
     })
