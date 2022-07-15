@@ -13,11 +13,11 @@ const Socket = Primus.createSocket({
   noop: [ws]
 })
 
-const admiralHost = core.getInput('admiralHost')
-const appId = core.getInput('appId')
-const order = core.getInput('order')
-const version = core.getInput('version')
-const explicitEnvironment = core.getInput('environment')
+const admiralHost = process.env.ADMIRAL_HOST
+const appId = process.env.APP_ID
+const order = process.env.ORDER
+const version = process.env.VERSION
+const explicitEnvironment = process.env.ENVIRONMENT
 
 core.info('INPUT: ' + JSON.stringify({appId, order, version, explicitEnvironment}))
 
